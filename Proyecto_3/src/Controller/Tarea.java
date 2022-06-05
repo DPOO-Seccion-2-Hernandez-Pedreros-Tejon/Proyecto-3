@@ -48,6 +48,17 @@ public class Tarea implements Serializable{
 		return terminada;
 	}
 	
+	public int getTiempoReal() {
+		int retorno = 0;
+		
+		for(Actividad actividad: actividades)
+		{
+			retorno += actividad.getTiempoUsado();
+		}
+		
+		return retorno;
+	}
+	
 	public Tarea(String nombre, String descripcion, String tipo, Actividad actividad)
 	{
 		this.descripcion = descripcion;

@@ -1,0 +1,26 @@
+---------------------------------------
+ManejadorProyectos.java :Sun Jun 05 14:24:02 COT 2022
+---------------------------------------
+java.io.InvalidClassException: Controller.Proyecto; local class incompatible: stream classdesc serialVersionUID = 5184663989796680467, local class serialVersionUID = -4200826869147129685
+	at java.base/java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:728)
+	at java.base/java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:2062)
+	at java.base/java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1909)
+	at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2235)
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1744)
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:514)
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:472)
+	at java.base/java.util.ArrayList.readObject(ArrayList.java:899)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.io.ObjectStreamClass.invokeReadObject(ObjectStreamClass.java:1231)
+	at java.base/java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2434)
+	at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2268)
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1744)
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:514)
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:472)
+	at Controller.ManejadorProyectos.cargarProyectos(ManejadorProyectos.java:86)
+	at view.Controller.cargarProyectos(Controller.java:32)
+	at view.Controller.cargarDatosM(Controller.java:26)
+	at view.Inicio.main(Inicio.java:107)

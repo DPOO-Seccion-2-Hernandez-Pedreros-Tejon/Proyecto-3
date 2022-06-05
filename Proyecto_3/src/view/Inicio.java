@@ -1476,8 +1476,14 @@ public class Inicio {
 		JLabel lblNewLabel_10_4_1_1 = new JLabel("Responsable/s: " + cadenaParticipantes);
 		lblNewLabel_10_4_1_1.setForeground(Color.WHITE);
 		lblNewLabel_10_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4_1_1.setBounds(10, 199, 400, 13);
+		lblNewLabel_10_4_1_1.setBounds(10, 209, 400, 13);
 		panel_4.add(lblNewLabel_10_4_1_1);
+		
+		JLabel lblNewLabel_10_4_1_2 = new JLabel("Tiempo real actual: " + String.valueOf(manejadorProyectos.tareaActual.getTiempoReal()));
+		lblNewLabel_10_4_1_2.setForeground(Color.WHITE);
+		lblNewLabel_10_4_1_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4_1_2.setBounds(10, 181, 400, 13);
+		panel_4.add(lblNewLabel_10_4_1_2);
 		
 		
 	}
