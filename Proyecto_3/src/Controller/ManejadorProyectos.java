@@ -17,6 +17,7 @@ public class ManejadorProyectos implements Serializable{
 	public Actividad actividadActual;
 	public ArrayList<Proyecto> proyectosCargados;
 	public Proyecto proyectoActual;
+	public WBS wbsActual;
 	public ArrayList<Participante> usuarios;
 	private static final String LOG_FILE = "error.log";
 	private String archivoProyectos;

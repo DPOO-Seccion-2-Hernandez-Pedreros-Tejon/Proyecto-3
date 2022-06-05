@@ -12,6 +12,7 @@ public class Proyecto implements Serializable{
 	public Participante duenio;
 	public ArrayList<Participante> miembros;
 	public ArrayList<Actividad> actividades;
+	public WBS wbs;
 	
 	public String getNombre() {
 		return nombre;
@@ -34,6 +35,10 @@ public class Proyecto implements Serializable{
 	public ArrayList<Actividad> getActividades() {
 		return actividades;
 	}
+	public WBS getWbs() {
+		return wbs;
+	}
+	
 	
 
 	public Proyecto(String nombre, String descripcion, String fechaInicio, 
@@ -47,6 +52,8 @@ public class Proyecto implements Serializable{
 		this.miembros = new ArrayList<Participante>();
 		this.actividades = new ArrayList<Actividad>();
 		this.miembros.add(duenio);
+		this.wbs = new WBS("Principal", "Este es el paquete principal.");
+		
 	}	
 
 	public int getActividadesProyectoMes(Proyecto proyectoP, int mes)
