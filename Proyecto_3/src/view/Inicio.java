@@ -37,6 +37,7 @@ import Controller.ManejadorProyectos;
 import Controller.Participante;
 import Controller.PersistenciaException;
 import Controller.Proyecto;
+import Controller.Tarea;
 import Controller.WBS;
 
 import javax.swing.border.Border;
@@ -90,7 +91,6 @@ public class Inicio {
 	static int graficaAnchura;
 	private JFrame frame;
 	private JTextField textField;
-	
 	private JTextField txtDdmmyyyy;
 
 
@@ -98,6 +98,8 @@ public class Inicio {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	private JTextField txtHola;
+	private JTextField txtChao;
 
 	/**
 	 * Launch the application.
@@ -163,9 +165,10 @@ public class Inicio {
 		
 		//crearPanelInicioSesion(principal);
 		//crearPanelNuevoProyecto(principal);
-		crearPanelProyecto(principal);
+		//crearPanelProyecto(principal);
 		//crearPanelModificarActividad(principal);
 		//crearPanelWBS(principal);
+		crearPanelTarea(principal);
 				
 	}
 	
@@ -1205,6 +1208,7 @@ public class Inicio {
 		panel.add(scrollPane);
 		
 		JList list = new JList();
+		list.setBackground(Color.WHITE);
 		ArrayList<String> nombres = new ArrayList();
 		for (WBS paquete: manejadorProyectos.wbsActual.getPaquetes()) 
 		{
@@ -1223,16 +1227,16 @@ public class Inicio {
 		MouseListener mouseListener = new MouseAdapter() {
 		    public void mouseClicked(MouseEvent e) {
 		        String selectedItem = list.getSelectedValue().toString();
-		        for (Actividad actividad: manejadorProyectos.proyectoActual.getActividades())
+		        for (WBS paquete: manejadorProyectos.wbsActual.getPaquetes())
 		        {
-		        	if (actividad.getNombre().equals(selectedItem))
+		        	if (paquete.getNombre().equals(selectedItem))
 		        	{
-		        		manejadorProyectos.setActividadActual(actividad);
+		        		manejadorProyectos.wbsActual = paquete;
 		        	}
 		        }
 		        panelCrearProyecto.setVisible(false);
 				principal.remove(panelCrearProyecto);
-		        crearPanelModificarActividad(principal);
+		        crearPanelWBS(principal);
 		    }
 		};
 		list.addMouseListener(mouseListener);
@@ -1248,6 +1252,7 @@ public class Inicio {
 			public void actionPerformed(ActionEvent e) {
 				panelCrearProyecto.setVisible(false);
 				principal.remove(panelCrearProyecto);
+				manejadorProyectos.wbsActual = manejadorProyectos.proyectoActual.wbs;
 				crearPanelNuevoProyecto(principal);
 			}
 		});
@@ -1265,206 +1270,215 @@ public class Inicio {
 		panelCrearProyecto.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JLabel lblNewLabel_9 = new JLabel("Informaci\u00F3n del proyecto");
+		JLabel lblNewLabel_9 = new JLabel("Escoja una tarea:");
 		lblNewLabel_9.setBackground(new Color(153, 204, 255));
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_9.setOpaque(true);
-		lblNewLabel_9.setBounds(0, 0, 821, 23);
+		lblNewLabel_9.setBounds(0, 89, 821, 23);
 		panel_4.add(lblNewLabel_9);
 		
-		JLabel lblNewLabel_9_1 = new JLabel("Subir actividad");
-		lblNewLabel_9_1.setOpaque(true);
-		lblNewLabel_9_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_9_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_9_1.setBackground(new Color(153, 204, 255));
-		lblNewLabel_9_1.setBounds(0, 414, 821, 23);
-		panel_4.add(lblNewLabel_9_1);
+		JLabel lblNewLabel_10_3 = new JLabel("Informaci\u00F3n del paquete");
+		lblNewLabel_10_3.setBackground(new Color(153, 204, 255));
+		lblNewLabel_10_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_10_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_10_3.setOpaque(true);
+		lblNewLabel_10_3.setBounds(0, 0, 821, 23);
+		panel_4.add(lblNewLabel_10_3);
 		
-		JLabel lblNewLabel_10 = new JLabel("Nombre del proyecto: " + manejadorProyectos.proyectoActual.nombre);
+		JLabel lblNewLabel_10 = new JLabel("Nombre del paquete: " + manejadorProyectos.wbsActual.getNombre());
 		lblNewLabel_10.setForeground(new Color(255, 255, 255));
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_10.setBounds(10, 33, 400, 13);
 		panel_4.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_10_1 = new JLabel("Fecha de inicio (dd/mm/aaaa): " + manejadorProyectos.proyectoActual.fechaInicio);
-		lblNewLabel_10_1.setForeground(Color.WHITE);
-		lblNewLabel_10_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_1.setBounds(10, 56, 400, 13);
-		panel_4.add(lblNewLabel_10_1);
-		
-		JLabel lblNewLabel_10_2 = new JLabel("Due\u00F1o del proyecto: " + manejadorProyectos.proyectoActual.duenio.getNombre());
+		JLabel lblNewLabel_10_2 = new JLabel("Descripción del paquete: " + manejadorProyectos.wbsActual.getDescripcion());
 		lblNewLabel_10_2.setForeground(Color.WHITE);
 		lblNewLabel_10_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_10_2.setBounds(411, 35, 400, 13);
 		panel_4.add(lblNewLabel_10_2);
 		
-		JLabel lblNewLabel_10_3 = new JLabel("Fecha estimada  (dd/mm/aaaa): " + manejadorProyectos.proyectoActual.fechaEstimada);
-		lblNewLabel_10_3.setForeground(Color.WHITE);
-		lblNewLabel_10_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_3.setBounds(411, 58, 400, 13);
-		panel_4.add(lblNewLabel_10_3);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setBounds(319, 122, 176, 474);
+		panel_4.add(scrollPane_1);
 		
-		JLabel lblNewLabel_11 = new JLabel("");
-		lblNewLabel_11.setOpaque(true);
-		ImageIcon graficaPNG;
-		try {
-			String currentPath = new File(".").getCanonicalPath();
-			graficaPNG = new ImageIcon(ImageIO.read(new File(currentPath + "\\src\\view\\graficaProyectoActual.png")));
-			lblNewLabel_11.setIcon(graficaPNG);
-			lblNewLabel_11.revalidate();
-			lblNewLabel_11.repaint();
-			
-			lblNewLabel_11.setLocation(32, 102);
-			lblNewLabel_11.setSize(new Dimension(741, 302));
-
-			panel_4.add(lblNewLabel_11);
-		} catch (IOException e2) {
-						e2.printStackTrace();
+		JList list_1 = new JList();
+		list_1.setForeground(Color.WHITE);
+		list_1.setBackground(Color.DARK_GRAY);
+		ArrayList<String> nombres_1 = new ArrayList<String>();
+		for (Tarea tarea: manejadorProyectos.wbsActual.getTareas()) 
+		{
+			nombres_1.add(tarea.getNombre());
 		}
-		
-		
-		
-		
-		
-		JLabel lblNewLabel_10_4 = new JLabel("Nombre del Participante:");
-		lblNewLabel_10_4.setForeground(Color.WHITE);
-		lblNewLabel_10_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4.setBounds(10, 447, 400, 13);
-		panel_4.add(lblNewLabel_10_4);
-		
-		textField = new JTextField();
-		textField.setBounds(269, 446, 352, 19);
-		panel_4.add(textField);
-		textField.setColumns(10);
-		textField.setText(manejadorProyectos.usuarioActual.getNombre());
-		
-		JLabel lblNewLabel_10_4_1 = new JLabel("Nombre de la actividad:");
-		lblNewLabel_10_4_1.setForeground(Color.WHITE);
-		lblNewLabel_10_4_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4_1.setBounds(10, 471, 400, 13);
-		panel_4.add(lblNewLabel_10_4_1);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(269, 470, 352, 19);
-		panel_4.add(textField_4);
-		
-		JLabel lblNewLabel_10_4_2 = new JLabel("Fecha:");
-		lblNewLabel_10_4_2.setForeground(Color.WHITE);
-		lblNewLabel_10_4_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4_2.setBounds(10, 495, 400, 13);
-		panel_4.add(lblNewLabel_10_4_2);
-		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(269, 494, 352, 19);
-		textField_5.setText(darFechaddMM());
-		panel_4.add(textField_5);
-		
-		JLabel lblNewLabel_10_4_3 = new JLabel("Tipo de la actividad:");
-		lblNewLabel_10_4_3.setForeground(Color.WHITE);
-		lblNewLabel_10_4_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4_3.setBounds(10, 519, 400, 13);
-		panel_4.add(lblNewLabel_10_4_3);
-		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(269, 518, 352, 19);
-		panel_4.add(textField_6);
-		
-		JLabel lblNewLabel_10_4_4 = new JLabel("Descripci\u00F3n: ");
-		lblNewLabel_10_4_4.setForeground(Color.WHITE);
-		lblNewLabel_10_4_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4_4.setBounds(10, 543, 400, 13);
-		panel_4.add(lblNewLabel_10_4_4);
-		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(269, 542, 352, 43);
-		panel_4.add(textField_7);
-		
-		JButton lblNewLabel_8_1 = new JButton("Subir");
-		lblNewLabel_8_1.setOpaque(true);
-		lblNewLabel_8_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_8_1.setBackground(Color.WHITE);
-		lblNewLabel_8_1.setBounds(651, 447, 144, 66);
-		lblNewLabel_8_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if ((!(textField.getText().equals("")) && !(textField_4.getText().equals(""))) && (!(textField_5.getText().equals("")) && !(textField_6.getText().equals(""))))
-				{
-					String autor = textField.getText();
-					String nombre = textField_4.getText();
-					String fecha = textField_5.getText();
-					String tipo = textField_6.getText();
-					String descripcion = textField_7.getText();
-					String horaInicio = getCurrentHour();
-					Participante usuario = null;
-					boolean aux = false;
-					for (Participante o: manejadorProyectos.usuarios)
-					{
-						if (autor.equals(o.getNombre()))
-						{
-							aux = true;
-							usuario = o;
-							Actividad actividadActual = new Actividad(nombre, tipo, fecha, horaInicio,
-									  descripcion, usuario,manejadorProyectos.proyectoActual);
-							actividadActual.setHoraFinal(horaInicio);
-							manejadorProyectos.proyectoActual.actividades.add(actividadActual);
-							usuario.actividadesParticipante.add(actividadActual);
-						
-							manejadorProyectos.actividadActual = actividadActual;
-							
-							try {
-								manejadorProyectos.salvarDatos();
-							} catch (PersistenciaException e1) {
-								//Auto-generated catch block
-								e1.printStackTrace();
-							}
-							panelCrearProyecto.setVisible(false);
-							principal.remove(panelCrearProyecto);
-							String currentPath = null;
-							try {
-								currentPath = new File(".").getCanonicalPath();
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							
-							File imagen = new File(currentPath + "\\src\\view\\graficaProyectoActual.png");
-							imagen.delete();
-							cargarGraficaProyectoActual();
-					        crearPanelProyecto(principal);
-					        
-					        
-							
-						}
-					}
-					
-					
-					
-					
-				}
-				
+		list_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		list_1.setModel(new AbstractListModel() {
+			String[] values = nombres_1.toArray(new String[nombres_1.size()]);
+			public int getSize() {
+				return values.length;
 			}
-			});
-		panel_4.add(lblNewLabel_8_1);
-		
-		JButton btnNewButton_3 = new JButton("WBS");
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				panelCrearProyecto.setVisible(false);
-				principal.remove(panelCrearProyecto);
-				crearPanelWBS(principal);
-			
+			public Object getElementAt(int index) {
+				return values[index];
 			}
 		});
-		btnNewButton_3.setBounds(651, 529, 145, 66);
-		panel_4.add(btnNewButton_3);
-		Border borde = BorderFactory.createLineBorder(Color.WHITE, 1);
-		panelCrearProyecto.setVisible(true);
+		MouseListener mouseListener_1 = new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        String selectedItem = list.getSelectedValue().toString();
+		        for (Tarea tarea: manejadorProyectos.wbsActual.getTareas())
+		        {
+		        	if (tarea.getNombre().equals(selectedItem))
+		        	{
+		        		manejadorProyectos.tareaActual = tarea;
+		        	}
+		        }
+		        panelCrearProyecto.setVisible(false);
+				principal.remove(panelCrearProyecto);
+		        crearPanelTarea(principal);
+		    }
+		};
+		list_1.addMouseListener(mouseListener_1);
+		scrollPane_1.setViewportView(list_1);
+		
+		
+	}
+	
+	public void crearPanelTarea(JPanel principal)
+	{
+		
+		JPanel panelCrearProyecto = new JPanel();
+		panelCrearProyecto.setForeground(new Color(255, 255, 255));
+		panelCrearProyecto.setBackground(Color.DARK_GRAY);
+		principal.add(panelCrearProyecto, BorderLayout.CENTER);
+		panelCrearProyecto.setLayout(null);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(10, 7, 1029, 622);
+		panel_4.setForeground(new Color(255, 255, 255));
+		panel_4.setBackground(Color.DARK_GRAY);
+		panelCrearProyecto.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JButton lblNewLabel_8 = new JButton("Volver");
+		lblNewLabel_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCrearProyecto.setVisible(false);
+				principal.remove(panelCrearProyecto);
+				manejadorProyectos.wbsActual = manejadorProyectos.proyectoActual.wbs;
+				crearPanelNuevoProyecto(principal);
+			}
+		});
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_8.setOpaque(true);
+		lblNewLabel_8.setBackground(Color.WHITE);
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setBounds(10, 266, 144, 66);
+		panel_4.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_10_3 = new JLabel("Informaci\u00F3n de la tarea");
+		lblNewLabel_10_3.setBackground(new Color(153, 204, 255));
+		lblNewLabel_10_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_10_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_10_3.setOpaque(true);
+		lblNewLabel_10_3.setBounds(-218, 0, 1247, 23);
+		panel_4.add(lblNewLabel_10_3);
+		
+		JLabel lblNewLabel_10 = new JLabel("Nombre de la tarea: " + manejadorProyectos.tareaActual.getNombre());
+		lblNewLabel_10.setForeground(new Color(255, 255, 255));
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10.setBounds(10, 33, 400, 13);
+		panel_4.add(lblNewLabel_10);
+		
+		JLabel lblNewLabel_10_2 = new JLabel("Tipo de la tarea: " + manejadorProyectos.tareaActual.getTipo());
+		lblNewLabel_10_2.setForeground(Color.WHITE);
+		lblNewLabel_10_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_2.setBounds(411, 35, 400, 13);
+		panel_4.add(lblNewLabel_10_2);
+		
+		JLabel lblNewLabel_10_4 = new JLabel("Descripción de la tarea: " + manejadorProyectos.tareaActual.getDescripcion());
+		lblNewLabel_10_4.setForeground(Color.WHITE);
+		lblNewLabel_10_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4.setBounds(10, 69, 400, 13);
+		panel_4.add(lblNewLabel_10_4);
+		
+		JLabel lblNewLabel_10_4_1 = new JLabel("Tiempo estimado en minutos: ");
+		lblNewLabel_10_4_1.setForeground(Color.WHITE);
+		lblNewLabel_10_4_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4_1.setBounds(10, 109, 400, 13);
+		panel_4.add(lblNewLabel_10_4_1);
+		
+		JLabel lblNewLabel_10_4_2 = new JLabel("Fecha estimada de finalización: ");
+		lblNewLabel_10_4_2.setForeground(Color.WHITE);
+		lblNewLabel_10_4_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4_2.setBounds(411, 109, 400, 13);
+		panel_4.add(lblNewLabel_10_4_2);
+		
+		txtHola = new JTextField();
+		txtHola.setFont(new Font("Tahoma", Font.BOLD, 11));
+		try
+		{
+			txtHola.setText(manejadorProyectos.tareaActual.getTiempoEstimado());
+		}
+		catch(Exception e)
+		{
+			txtHola.setText("Ingrese un tiempo estimado");
+		}
+		txtHola.setBounds(215, 108, 153, 19);
+		panel_4.add(txtHola);
+		txtHola.setColumns(10);
+		
+		txtChao = new JTextField();
+		txtChao.setFont(new Font("Tahoma", Font.BOLD, 11));
+		try
+		{
+			txtChao.setText(manejadorProyectos.tareaActual.getTiempoEstimado());
+		}
+		catch(Exception e)
+		{
+			txtChao.setText("Ingrese una fecha dd/mm/aaaa");
+		}
+		txtChao.setBounds(626, 108, 153, 19);
+		panel_4.add(txtChao);
+		txtChao.setColumns(10);
+		
+		JButton btnNewButton_4 = new JButton("Acutalizar");
+		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_4.setBounds(252, 135, 85, 21);
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCrearProyecto.setVisible(false);
+				principal.remove(panelCrearProyecto);
+				manejadorProyectos.tareaActual.setTiempoEstimado(txtHola.getText());
+				crearPanelTarea(principal);
+			}
+		});
+		panel_4.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("Actualizar");
+		btnNewButton_5.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_5.setBounds(661, 132, 85, 21);
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCrearProyecto.setVisible(false);
+				principal.remove(panelCrearProyecto);
+				manejadorProyectos.tareaActual.setFechaEstimada(txtChao.getText());
+				crearPanelTarea(principal);
+			}
+		});
+		panel_4.add(btnNewButton_5);
+		
+		
+		String cadenaParticipantes = "";
+		for (Participante participante: manejadorProyectos.tareaActual.getResponsables()) 
+		{
+			cadenaParticipantes += (participante.getNombre() + ", "); 
+		}
+		cadenaParticipantes = cadenaParticipantes.substring(0, cadenaParticipantes.length() - 2);
+		JLabel lblNewLabel_10_4_1_1 = new JLabel("Responsable/s: " + cadenaParticipantes);
+		lblNewLabel_10_4_1_1.setForeground(Color.WHITE);
+		lblNewLabel_10_4_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4_1_1.setBounds(10, 199, 400, 13);
+		panel_4.add(lblNewLabel_10_4_1_1);
+		
 		
 	}
 	

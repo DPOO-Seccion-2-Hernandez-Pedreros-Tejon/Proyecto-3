@@ -9,6 +9,17 @@ public class Tarea implements Serializable{
 	private String descripcion;	
 	private String tipo;
 	private String tiempoEstimado;
+	private String fechaEstimada;
+	public void setTiempoEstimado(String tiempoEstimado) {
+		this.tiempoEstimado = tiempoEstimado;
+	}
+	public void setFechaEstimada(String fechaEstimada) {
+		this.fechaEstimada = fechaEstimada;
+	}
+	public void setTerminada(Boolean terminada) {
+		this.terminada = terminada;
+	}
+
 	private ArrayList<Participante> responsables;
 	private ArrayList<Actividad> actividades;
 	private Boolean terminada;
