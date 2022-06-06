@@ -171,7 +171,7 @@ public class Inicio {
 		
 		crearPanelInicioSesion(principal);
 		//crearPanelNuevoProyecto(principal);
-		crearPanelProyecto(principal);
+		//crearPanelProyecto(principal);
 		//crearPanelModificarActividad(principal);
 		//crearPanelWBS(principal);
 		//crearPanelTarea(principal);
