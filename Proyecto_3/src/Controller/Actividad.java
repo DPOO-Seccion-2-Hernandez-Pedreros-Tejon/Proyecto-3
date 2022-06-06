@@ -91,7 +91,7 @@ public class Actividad implements Serializable
 		this.proyectoActividad = proyectoActividad;
 	}
 	
-	public void finalizarActividad(Actividad actividad, long tiempo)
+	public void finalizarActividad(Actividad actividad, int tiempo)
 	{
 		tiempoUsado = tiempo;
 		actividad.finalizada = true;
