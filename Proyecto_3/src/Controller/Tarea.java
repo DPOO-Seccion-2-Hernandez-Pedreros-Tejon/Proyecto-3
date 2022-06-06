@@ -16,6 +16,9 @@ public class Tarea implements Serializable{
 	public void setFechaEstimada(String fechaEstimada) {
 		this.fechaEstimada = fechaEstimada;
 	}
+	public void setTipo(String fechaEstimada) {
+		this.tipo = fechaEstimada;
+	}
 	public void setTerminada(Boolean terminada) {
 		this.terminada = terminada;
 	}

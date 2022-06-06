@@ -100,6 +100,9 @@ public class Inicio {
 	private JTextField textField_7;
 	private JTextField txtHola;
 	private JTextField txtChao;
+	private JTextField textField_8;
+	private JTextField txtIngreseUnNmero;
+	private JTextField txtIngreseElNombre;
 
 	/**
 	 * Launch the application.
@@ -165,10 +168,10 @@ public class Inicio {
 		
 		//crearPanelInicioSesion(principal);
 		//crearPanelNuevoProyecto(principal);
-		//crearPanelProyecto(principal);
+		crearPanelProyecto(principal);
 		//crearPanelModificarActividad(principal);
 		//crearPanelWBS(principal);
-		crearPanelTarea(principal);
+		//crearPanelTarea(principal);
 				
 	}
 	
@@ -1095,13 +1098,27 @@ public class Inicio {
 		JLabel lblNewLabel_10_4_4 = new JLabel("Descripci\u00F3n: ");
 		lblNewLabel_10_4_4.setForeground(Color.WHITE);
 		lblNewLabel_10_4_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_10_4_4.setBounds(10, 543, 400, 13);
+		lblNewLabel_10_4_4.setBounds(10, 545, 400, 13);
 		panel_4.add(lblNewLabel_10_4_4);
 		
 		textField_7 = new JTextField();
 		textField_7.setColumns(10);
-		textField_7.setBounds(269, 542, 352, 43);
+		textField_7.setBounds(269, 542, 352, 23);
 		panel_4.add(textField_7);
+		
+		txtIngreseUnNmero = new JTextField();
+		txtIngreseUnNmero.setText("Ingrese un n\u00FAmero");
+		txtIngreseUnNmero.setColumns(10);
+		txtIngreseUnNmero.setBounds(269, 568, 352, 23);
+		panel_4.add(txtIngreseUnNmero);
+		
+		txtIngreseElNombre = new JTextField();
+		txtIngreseElNombre.setText("Ingrese el nombre de una tarea");
+		txtIngreseElNombre.setColumns(10);
+		txtIngreseElNombre.setBounds(269, 599, 352, 23);
+		panel_4.add(txtIngreseElNombre);
+		Border borde = BorderFactory.createLineBorder(Color.WHITE, 1);
+		panelCrearProyecto.setVisible(true);
 		
 		JButton lblNewLabel_8_1 = new JButton("Subir");
 		lblNewLabel_8_1.setOpaque(true);
@@ -1130,6 +1147,14 @@ public class Inicio {
 							Actividad actividadActual = new Actividad(nombre, tipo, fecha, horaInicio,
 									  descripcion, usuario,manejadorProyectos.proyectoActual);
 							actividadActual.setHoraFinal(horaInicio);
+							actividadActual.tiempoUsado = Integer.parseInt(txtIngreseUnNmero.getText());
+							for (Tarea tarea: manejadorProyectos.proyectoActual.getTareas())
+							{
+								if (tarea.getNombre().equals(txtIngreseElNombre.getText()))
+									{
+										tarea.getActividades().add(actividadActual);
+									}
+							}
 							manejadorProyectos.proyectoActual.actividades.add(actividadActual);
 							usuario.actividadesParticipante.add(actividadActual);
 						
@@ -1182,8 +1207,18 @@ public class Inicio {
 		});
 		btnNewButton_3.setBounds(651, 529, 145, 66);
 		panel_4.add(btnNewButton_3);
-		Border borde = BorderFactory.createLineBorder(Color.WHITE, 1);
-		panelCrearProyecto.setVisible(true);
+		
+		JLabel lblNewLabel_10_4_4_1 = new JLabel("Tiempo emplado en minutos: ");
+		lblNewLabel_10_4_4_1.setForeground(Color.WHITE);
+		lblNewLabel_10_4_4_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4_4_1.setBounds(10, 574, 400, 13);
+		panel_4.add(lblNewLabel_10_4_4_1);
+		
+		JLabel lblNewLabel_10_4_4_2 = new JLabel("Tarea a la que se asocia: ");
+		lblNewLabel_10_4_4_2.setForeground(Color.WHITE);
+		lblNewLabel_10_4_4_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_10_4_4_2.setBounds(10, 602, 400, 13);
+		panel_4.add(lblNewLabel_10_4_4_2);
 		
 	}
 	
@@ -1388,7 +1423,7 @@ public class Inicio {
 		lblNewLabel_10.setBounds(10, 33, 400, 13);
 		panel_4.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_10_2 = new JLabel("Tipo de la tarea: " + manejadorProyectos.tareaActual.getTipo());
+		JLabel lblNewLabel_10_2 = new JLabel("Tipo de la tarea: " );
 		lblNewLabel_10_2.setForeground(Color.WHITE);
 		lblNewLabel_10_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_10_2.setBounds(411, 35, 400, 13);
@@ -1420,7 +1455,7 @@ public class Inicio {
 		}
 		catch(Exception e)
 		{
-			txtHola.setText("Ingrese un tiempo estimado");
+			txtHola.setText("Ingrese un número");
 		}
 		txtHola.setBounds(215, 108, 153, 19);
 		panel_4.add(txtHola);
@@ -1484,6 +1519,33 @@ public class Inicio {
 		lblNewLabel_10_4_1_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_10_4_1_2.setBounds(10, 181, 400, 13);
 		panel_4.add(lblNewLabel_10_4_1_2);
+		
+		textField_8 = new JTextField();
+		try
+		{
+			textField_8.setText(manejadorProyectos.tareaActual.getTipo());
+		}
+		catch(Exception e)
+		{
+			textField_8.setText("Ingrese un tipo");
+		}
+		textField_8.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textField_8.setColumns(10);
+		textField_8.setBounds(537, 33, 153, 19);
+		panel_4.add(textField_8);
+		
+		JButton btnNewButton_5_1 = new JButton("Actualizar");
+		btnNewButton_5_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_5_1.setBounds(573, 58, 85, 21);
+		btnNewButton_5_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCrearProyecto.setVisible(false);
+				principal.remove(panelCrearProyecto);
+				manejadorProyectos.tareaActual.setTipo(textField_8.getText());
+				crearPanelTarea(principal);
+			}
+		});
+		panel_4.add(btnNewButton_5_1);
 		
 		
 	}

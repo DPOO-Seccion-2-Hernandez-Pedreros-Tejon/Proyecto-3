@@ -12,7 +12,7 @@ public class Actividad implements Serializable
 	public String horaInicio;
 	public String horaFinal;
 	public String descripcion;
-	public float tiempoUsado;
+	public int tiempoUsado;
 	public boolean finalizada;
 	public ArrayList<String> fechasPausa;
 	public ArrayList<String>  fechasReanudar;
