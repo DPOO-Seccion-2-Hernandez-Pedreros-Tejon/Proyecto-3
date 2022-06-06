@@ -21,6 +21,8 @@ import javax.swing.border.MatteBorder;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
@@ -60,6 +62,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
@@ -166,7 +169,7 @@ public class Inicio {
 		panel_2.add(lblNewLabel_5, "cell 3 0");
 		
 		
-		//crearPanelInicioSesion(principal);
+		crearPanelInicioSesion(principal);
 		//crearPanelNuevoProyecto(principal);
 		crearPanelProyecto(principal);
 		//crearPanelModificarActividad(principal);
@@ -898,6 +901,29 @@ public class Inicio {
 	 
 	    
 	  }
+	public CategoryChart cargarGraficaTareaActual() {
+		 
+	    // Create Chart
+		graficaAnchura = 741;
+		graficaAltura = 302;
+		CategoryChart chart = new CategoryChartBuilder().width(graficaAnchura).height(graficaAltura).title("Tiempo ").xAxisTitle("Tareas").yAxisTitle("Tiempo").build();
+		 
+	    // Customize Chart
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+	 
+	    // Series
+	    int tiempoEstimado = 0;
+	    int tiempoReal = 0;
+	    for (Tarea tarea: manejadorProyectos.proyectoActual.getTareas())
+	    {
+	    	tiempoEstimado += Integer.parseInt(tarea.getTiempoEstimado());
+	    	tiempoReal += tarea.getTiempoReal();
+	    }
+	    chart.addSeries("test 1", Arrays.asList(new String[] { "Tiempo Estimado", "Tiempo real"}), Arrays.asList(new Integer[] { tiempoEstimado,tiempoReal }));
+	 
+	    return chart;    
+	  }
+	
 	public void crearPanelProyecto(JPanel principal)
 	{
 		cargarGraficaProyectoActual();
@@ -1379,6 +1405,11 @@ public class Inicio {
 	
 	public void crearPanelTarea(JPanel principal)
 	{
+		try {
+			BitmapEncoder.saveBitmap(cargarGraficaTareaActual(), "src/view/graficaTareasProyecto", BitmapFormat.PNG);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		JPanel panelCrearProyecto = new JPanel();
 		panelCrearProyecto.setForeground(new Color(255, 255, 255));
@@ -1406,7 +1437,7 @@ public class Inicio {
 		lblNewLabel_8.setOpaque(true);
 		lblNewLabel_8.setBackground(Color.WHITE);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setBounds(10, 266, 144, 66);
+		lblNewLabel_8.setBounds(10, 580, 111, 32);
 		panel_4.add(lblNewLabel_8);
 		
 		JLabel lblNewLabel_10_3 = new JLabel("Informaci\u00F3n de la tarea");
@@ -1546,6 +1577,25 @@ public class Inicio {
 			}
 		});
 		panel_4.add(btnNewButton_5_1);
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 245, 935, 325);
+		panel_4.add(panel);
+		panel.setLayout(null);
+		
+		JLabel GraficaTarea = new JLabel("");
+		try {
+			String currentPath = new File(".").getCanonicalPath();
+			File imagen = new File(currentPath + "\\src\\view\\graficaTareasProyecto.png");
+			ImageIcon graficaPNG = new ImageIcon(ImageIO.read(imagen));
+			GraficaTarea.setIcon(graficaPNG);
+			GraficaTarea.setBounds(0, 0, 935, 325);
+			panel.add(GraficaTarea);
+			imagen.delete();
+		} catch (IOException e2) {
+			
+			e2.printStackTrace();
+		}
+		
 		
 		
 	}

@@ -13,7 +13,11 @@ public class Proyecto implements Serializable{
 	public ArrayList<Participante> miembros;
 	public ArrayList<Actividad> actividades;
 	public WBS wbs;
+	public ArrayList<Tarea> tareas;
 	
+	public ArrayList<Tarea> getTareas() {
+		return tareas;
+	}
 	public String getNombre() {
 		return nombre;
 	}
